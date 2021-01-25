@@ -1,0 +1,5 @@
+node_modules/
+config.json
+birthdays.json
+levels.json
+LevelBackground.png
