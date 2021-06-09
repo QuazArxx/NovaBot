@@ -2,7 +2,6 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 const profanities = require('profanities/index.json');
-const birthdays = require('./birthdays.json');
 const schedule = require('node-schedule');
 //const streamers = require('./streamers.json');
 //const twitchlinks = require('./twitchlinks.json');
@@ -17,14 +16,6 @@ const day = hour * 24;
 
 // Variable used for the F timeout function so it can cooldown
 var used = false;
-
-// Gets the date "Day of Month"
-function getToday(){
-    let today = new Date();
-    let months = [`January`,`February`,`March`,`April`,`May`,`June`,`July`,`August`,`September`,`October`,`November`,`December`];
-    let suffix = [`st`,`nd`,`rd`];
-    return `${today.getDate()}${suffix[today.getDate()] || `th`} of ${months[today.getMonth()]}`;
-}
 
 // Declares the client and the commands for the handler
 const client = new Discord.Client();
@@ -45,17 +36,6 @@ for (var folder of folders) {
 client.once('ready', () => {
 	console.log(`${client.user.username} is online!`);
 });
-
-// Checks every day at the same time to see if it's someone's birthday
-setTimeout(function() {
-	const birthdayCheck = schedule.scheduleJob('11 * * *', function() {
-		for (x = 0; x < birthdays.length; x++) {
-			if (getToday() == birthdays[x].bday) {
-				return client.channels.cache.get('483654529967980554').send(`Everyone wish <@${birthdays[x].userID}> a very happy birthday!`);
-			}
-		}
-	})
-}, day)
 
 // Welcomes new members into the server
 client.on('guildMemberAdd', member => {
@@ -150,7 +130,7 @@ client.on('message', async message => {
 	if (words == '?agree') {
 		if (message.channel.id == '721895885746995200') { // Bot will only respond if ?agree is used in the verification channel
 			// Sends the welcome message in the Global Chat
-			message.guild.channels.cache.get('478652148691894295').send(`Everyone please welcome ${message.author} to Lives of One! ${message.author}, don't forget to <#493866938687029268>!`);
+			message.guild.channels.cache.get('478652148691894295').send(`Everyone please welcome ${message.author} to the server! ${message.author}, don't forget to <#493866938687029268>!`);
 		}
 	}
 
